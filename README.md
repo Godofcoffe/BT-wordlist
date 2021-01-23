@@ -1,2 +1,2 @@
 # BT-wordlist
-Um programa para criar wordlist para força bruta.
+Um programinha para criar wordlist para força bruta.
