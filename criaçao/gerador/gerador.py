@@ -1,7 +1,7 @@
 from random import randint, choice
 
 
-def rand(nome=None, simb=False, num=False, cap=False, pos=False):
+def rand(nome=None, simb=False, num=False, cap=False, pos=False, max=8):
     """
 Gera uma senha aleátoria de 8 caracteres entre letras e números.
   nome = palavra que queira adicionar no gerador:
@@ -67,7 +67,7 @@ Gera uma senha aleátoria de 8 caracteres entre letras e números.
 
     # escolha dos 8 dígitos
     temp = []
-    for c in range(0, 8):
+    for c in range(0, max):
         temp.append(choice(tentativas))
     produto = ''.join(temp)
     return produto

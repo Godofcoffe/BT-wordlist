@@ -26,6 +26,7 @@ print(linha())
 p = 'carácteres.txt'
 s = 'números.txt'
 pc = 'WiFi.txt'
+rp = 'Roteador.txt'
 
 while True:
     opc = menu_principal(['Padrão', 'Wifi'])
@@ -89,7 +90,7 @@ while True:
         # A opção wifi se aplica a senhas de segurança baixa,
         # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
         opc2 = menu_principal(
-            ['Números', 'Palavra-chave'])
+            ['Números', 'Palavra-chave', 'Senha padrão'])
         if opc2 == 1:
             criar_arqv(s)
             ms = []
@@ -128,8 +129,22 @@ while True:
                         cor_texto('vermelho', a)
                         ms.append(a)
                         add_w(pc, a)
-
         elif opc2 == 3:
+            # A diferença aqui que em vez de 8 caracteres serão 10.
+            criar_arqv(rp)
+            ms = []
+            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
+            sleep(3)
+            print('gerando...')
+            sleep(2)
+            while True:
+                a = rand(None, False, False, True, max=10)
+                while a not in ms:
+                    cor_texto('vermelho', a)
+                    ms.append(a)
+                    add_w(rp, a)
+
+        elif opc2 == 4:
             print('saindo...')
             sleep(1)
             break
