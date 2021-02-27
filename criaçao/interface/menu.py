@@ -1,6 +1,3 @@
-from criaçao.interface.form_texto import *
-
-
 def linha(tam=43):
     """
 Retorna o número do tamanho da argumentação. Lembrando que o tamanho é em pixels.
@@ -16,11 +13,11 @@ Testa os dados e retorna se for um número inteiro.Ele substitue a função inpu
         try:
             n = int(input(num))
         except (ValueError, NameError):
-            print('\033[31m{}\033[m'.format('Erro!tente novamente!'))
+            print('Erro!tente novamente!')
         except KeyboardInterrupt:
-            print('\033[31m{}\033[m'.format('O usuário escolheu não digitar os dados!'))
+            print('O usuário escolheu não digitar os dados!')
         except TypeError:
-            print('\033[31m{}\033[m'.format('Erro de discordância de dados!'))
+            print('Erro de discordância de dados!')
         else:
             return n
 
@@ -43,13 +40,13 @@ Não é necessario a opção de saida,o código faz automaticamente.
     c = 1
     e = 'Sair do programa.'
     for item in opc:
-        print(f'\033[31m{c}\033[m - \033[32m{item}\033[m')
+        print(f'{c} - {item}')
         c += 1
-    print(f'\033[31m{c}\033[m - \033[32m{e}\033[m')
+    print(f'{c} - {e}')
     print(linha())
     opc = teste_int('Digite um número:')
     if opc > c:
-        cor_texto('vermelho', 'Você passou do limite de opções!')
+        print('Você passou do limite de opções!')
     elif opc == 0:
-        cor_texto('vermelho', 'Não há opção 0!')
+        print('Não há opção 0!')
     return opc

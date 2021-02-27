@@ -1,6 +1,7 @@
 from time import sleep
 from BD.teste_arquivo import *
 from gerador.gerador import *
+from interface.menu import *
 
 
 def esc(valid):
@@ -12,7 +13,7 @@ def esc(valid):
         elif opcao == 'n':
             return False
         else:
-            cor_texto('vermelho', 'Escolha entre as duas opções!')
+            print('Escolha entre as duas opções!')
             pass
 
 
@@ -23,7 +24,7 @@ def gerarlist(caminho, limite, *args):
     for c in range(limite):
         retorno = rand(args)
         if retorno not in ms:
-            cor_texto('vermelho', retorno)
+            print(retorno)
             ms.append(retorno)
             add_w(caminho, retorno)
 
