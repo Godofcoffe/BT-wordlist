@@ -1,9 +1,9 @@
 from random import randint, choice
 
 
-def rand(nome=None, simb=False, num=False, cap=False, pos=False, max=8):
+def rand(args):
     """
-Gera uma senha aleátoria de 8 caracteres entre letras e números.
+Gera uma senha aleátoria de 8 ou mais caracteres entre letras e números.
   nome = palavra que queira adicionar no gerador:
   se for adicionado uma palavra,só serão gerados números aleatórios que vão preencher o espaço de 8 caractéres.
   max = número máximo que será gerado.
@@ -12,6 +12,12 @@ Gera uma senha aleátoria de 8 caracteres entre letras e números.
   cap = escolhe se haverá letras maiuscúlas.
   pos = Muda a posição do parâmetro nome.
 """
+    nome = args[0]
+    simb = args[1]
+    num = args[2]
+    cap = args[3]
+    pos = args[4]
+    max = args[5]
 
     # geração de números
     tentativas = []
@@ -22,7 +28,7 @@ Gera uma senha aleátoria de 8 caracteres entre letras e números.
             a = randint(0, 9)
             tentativas.append(str(a))
     elif not num:
-        for c in range(0, 9):
+        for c in range(0, 8):
             a = randint(0, 9)
             tentativas.append(str(a))
 

@@ -3,9 +3,6 @@ from BD.teste_arquivo import *
 from gerador.gerador import *
 
 
-# para saber mais sobre a geração de caractéres, acesse a biblioteca gerador.
-
-
 def esc(valid):
     while True:
         opcao = str(input(valid))
@@ -19,130 +16,69 @@ def esc(valid):
             pass
 
 
-print(linha())
-print('Gerador'.center(43))
-print(linha())
+def gerarlist(caminho, limite, *args):
+    ms = []
+    print('gerando...')
+    sleep(2)
+    for c in range(limite):
+        retorno = rand(args)
+        if retorno not in ms:
+            cor_texto('vermelho', retorno)
+            ms.append(retorno)
+            add_w(caminho, retorno)
 
-p = 'carácteres.txt'
-s = 'números.txt'
-pc = 'WiFi.txt'
-rp = 'Roteador.txt'
+
+# saida de arquivos .txt
+OUT_TXT = 'carácteres.txt'
+OUT_NUM = 'números.txt'
+OUT_WIFI = 'WiFi.txt'
+OUT_ROT = 'Roteador.txt'
 
 while True:
+    cabeçalho('Gerador')
     opc = menu_principal(['Padrão', 'Wifi'])
     # A opção padrão pode ser usada para força bruta em contas que usam apps de geração de senha
-    # ou para Wifis com senhas de fábrica.
     if opc == 1:
         opc = esc('Deseja adição de simbolos? [s/n]:')
         opc2 = esc('Deseja adição de letras maiuscúlas? [s/n]:')
-        criar_arqv(p)
+        criar_arqv(OUT_TXT)
+        tentativas = int(input('Antes de gerar-mos, quantas tentativas deseja salvar?: '))
         if opc and opc2:
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            ms = []
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, True, False, True)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(p, a)
+            gerarlist(OUT_TXT, tentativas, None, True, False, True, False, 8)
+
         elif not opc and not opc2:
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            ms = []
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, False, False, False)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(p, a)
+            gerarlist(OUT_TXT, tentativas, None, False, False, False, False, 8)
 
         elif not opc and opc2:
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            ms = []
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, False, False, True)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(p, a)
+            gerarlist(OUT_TXT, tentativas, None, False, False, True, False, 8)
+
         elif opc and not opc2:
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            ms = []
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, True, False, False)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(p, a)
+            gerarlist(OUT_TXT, tentativas, None, True, False, False, False, 8)
 
     elif opc == 2:
         # A opção wifi se aplica a senhas de segurança baixa,
         # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
-        opc2 = menu_principal(
-            ['Números', 'Palavra-chave', 'Senha padrão'])
+        opc2 = menu_principal(['Números', 'Palavra-chave', 'Senha padrão'])
         if opc2 == 1:
-            criar_arqv(s)
-            ms = []
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, False, True)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(s, a)
+            criar_arqv(OUT_NUM)
+            tentativas = int(input('Antes de gerar-mos, quantas tentativas deseja salvar?: '))
+            gerarlist(OUT_NUM, tentativas, None, False, True, False, False, 8)
 
         elif opc2 == 2:
             escolha = esc('Deseja que a palavra esteja no inicio? [s/n]:')
             nome = str(input('Qual o palavra:'))
-            criar_arqv(pc)
+            criar_arqv(OUT_WIFI)
+            tentativas = int(input('Antes de gerar-mos, quantas tentativas deseja salvar?: '))
             if escolha:
-                ms = []
-                print('gerando...')
-                sleep(2)
-                while True:
-                    a = rand(nome, False, False, False, True)
-                    while a not in ms:
-                        cor_texto('vermelho', a)
-                        ms.append(a)
-                        add_w(pc, a)
+                gerarlist(OUT_WIFI, tentativas, nome, False, False, False, True, 8)
             elif not escolha:
-                ms = []
-                print('gerando...')
-                sleep(2)
-                while True:
-                    a = rand(nome, False, False, False, False)
-                    while a not in ms:
-                        cor_texto('vermelho', a)
-                        ms.append(a)
-                        add_w(pc, a)
+                gerarlist(OUT_WIFI, tentativas, nome, False, False, False, False, 8)
+
         elif opc2 == 3:
             # A diferença aqui que em vez de 8 caracteres serão 10.
-            criar_arqv(rp)
-            ms = []
-            print('Para uma wordlist consideravel,deixe programa rodar por no minimo 5 minutos.')
-            sleep(3)
-            print('gerando...')
-            sleep(2)
-            while True:
-                a = rand(None, False, False, True, max=10)
-                while a not in ms:
-                    cor_texto('vermelho', a)
-                    ms.append(a)
-                    add_w(rp, a)
+            criar_arqv(OUT_ROT)
+            tentativas = int(input('Antes de gerar-mos, quantas tentativas deseja salvar?: '))
+            gerarlist(OUT_ROT, tentativas, None, False, False, True, False, 10)
 
         elif opc2 == 4:
             print('saindo...')
