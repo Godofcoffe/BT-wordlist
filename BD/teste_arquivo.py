@@ -1,5 +1,6 @@
 from interface.menu import *
 
+
 def arquivo_existe(nome):
     """
 Testa se o arquivo existe,apenas argumente o nome do arquivo.
@@ -19,7 +20,7 @@ Cria um novo arquivo,apenas argumente o nome do arquivo.
     try:
         open(nome, 'wt+')
     except:
-        print('Erro ao criar o arquivo')
+        print('Error creating the file')
 
 
 def ler_arqv(nome):
@@ -29,10 +30,10 @@ Imprime o arquivo txt,apenas argumente o nome do arquivo.
     try:
         open(nome, 'rt')
     except FileExistsError or PermissionError:
-        print('ERRO ao ler arquivo')
+        print('ERROR reading file')
     else:
         with open(nome, 'rt') as arqv:
-            cabeçalho('DADOS SALVOS.')
+            cabeçalho('SAVED DATA.')
             for linha in arqv:
                 print(f'{linha}'.replace('\n', ''))
 
@@ -44,10 +45,10 @@ Aqui serão adicionados as tentativas para a wordlist.
     try:
         open(arq, 'at')
     except FileExistsError or PermissionError:
-        print('Erro ao abrir arquivo.')
+        print('Error opening file.')
     else:
         try:
             with open(arq, 'at') as arqv:
                 arqv.write(f'{arg1}\n')
         except FileExistsError or PermissionError:
-            print('Erro ao adicionar a WordList.')
+            print('Error adding to WordList.')

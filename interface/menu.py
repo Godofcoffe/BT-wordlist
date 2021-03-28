@@ -13,11 +13,11 @@ Testa os dados e retorna se for um número inteiro.Ele substitue a função inpu
         try:
             n = int(input(num))
         except (ValueError, NameError):
-            print('Erro!tente novamente!')
+            print('Error, try again!')
         except KeyboardInterrupt:
-            print('O usuário escolheu não digitar os dados!')
+            print('The user chose not to enter the data!')
         except TypeError:
-            print('Erro de discordância de dados!')
+            print('Data mismatch error!')
         else:
             return n
 
@@ -38,15 +38,15 @@ Um menuzinho principal pronto.
 Não é necessario a opção de saida,o código faz automaticamente.
     """
     c = 1
-    e = 'Sair do programa.'
+    e = 'Exit the program.'
     for item in opc:
         print(f'{c} - {item}')
         c += 1
     print(f'{c} - {e}')
     print(linha())
-    opc = teste_int('Digite um número:')
+    opc = teste_int('Enter a number: ')
     if opc > c:
-        print('Você passou do limite de opções!')
+        print('You have crossed the limit of options!')
     elif opc == 0:
-        print('Não há opção 0!')
+        print('There is no option 0!')
     return opc

@@ -23,7 +23,7 @@ Uso obrigatorio de aspas simples.
     if c == 'vermelho':
         print('\033[31m{}\033[m'.format(txt))
     elif c == 'branco':
-        print('\033[30m{}\033[m'.format(txt))
+        print('\033[37m{}\033[m'.format(txt))
     elif c == 'verde':
         print('\033[32m{}\033[m'.format(txt))
     elif c == 'amarelo':
