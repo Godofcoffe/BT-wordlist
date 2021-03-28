@@ -1,2 +1,2 @@
 # Cascading WordList
-Um programinha para criar wordlist para força bruta.
+A program to create wordlist for brute force.
