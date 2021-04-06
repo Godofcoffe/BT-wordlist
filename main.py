@@ -32,7 +32,7 @@ class Concatenar(Rand):
         for c in range(self.total):
             retorno = self.rand()
             if retorno not in ms:
-                print(retorno)
+                print(color_text('green', retorno))
                 ms.append(retorno)
                 add_w(self.path, retorno)
 

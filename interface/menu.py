@@ -1,4 +1,4 @@
-from form_text import *
+from interface.form_text import *
 
 
 def linha(tam=43):
@@ -30,7 +30,7 @@ def cabeçalho(txt):
 Just type the text in the argument and it will be printed and centralized.
     """
     print(linha())
-    print(txt.center(43))
+    print(color_text('green', f'{txt.center(43)}'))
     print(linha())
 
 
@@ -43,9 +43,9 @@ There is no need for the exit option, the code does it automatically.
     c = 1
     e = 'Exit the program.'
     for item in opc:
-        print(color_text('white', f'{c}'), f' - {item}')
+        print(color_text('white', f'[ {c} ]'), f'- {item}')
         c += 1
-    print(color_text('white', f'{c}'), f' - {e}')
+    print(color_text('white', f'[ {c} ]'), f'- {e}')
     print(linha())
     print(color_text('yellow', 'Enter a number: '), end='')
     opc = teste_int('')

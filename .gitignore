@@ -13,3 +13,5 @@ creation/interface/__pycache__/form_texto.cpython-39.pyc
 *.pyc
 
 
+interface/__pycache__/menu.cpython-39.pyc
+BD/__pycache__/teste_arquivo.cpython-39.pyc
