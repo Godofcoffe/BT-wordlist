@@ -1,30 +1,33 @@
+from form_text import *
+
+
 def linha(tam=43):
     """
-Retorna o número do tamanho da argumentação. Lembrando que o tamanho é em pixels.
+Returns the number of the argument size. Remembering that the size is in pixels.
     """
     return '-' * tam
 
 
 def teste_int(num):
     """
-Testa os dados e retorna se for um número inteiro.Ele substitue a função input.
+Tests the data and returns if it is an integer. It replaces the input function.
     """
     while True:
         try:
             n = int(input(num))
         except (ValueError, NameError):
-            print('Error, try again!')
+            print(color_text('red', 'Error, try again!'))
         except KeyboardInterrupt:
-            print('The user chose not to enter the data!')
+            print(color_text('red', 'The user chose not to enter the data!'))
         except TypeError:
-            print('Data mismatch error!')
+            print(color_text('red', 'Data mismatch error!'))
         else:
             return n
 
 
 def cabeçalho(txt):
     """
-Apenas digite o texto na argumentação e ele será imprimido e centralizado.
+Just type the text in the argument and it will be printed and centralized.
     """
     print(linha())
     print(txt.center(43))
@@ -33,20 +36,21 @@ Apenas digite o texto na argumentação e ele será imprimido e centralizado.
 
 def menu_principal(opc):
     """
-Um menuzinho principal pronto.
-  opc = opções em LISTA.
-Não é necessario a opção de saida,o código faz automaticamente.
+A main little boy ready.
+   opc = options in LIST.
+There is no need for the exit option, the code does it automatically.
     """
     c = 1
     e = 'Exit the program.'
     for item in opc:
-        print(f'{c} - {item}')
+        print(color_text('white', f'{c}'), f' - {item}')
         c += 1
-    print(f'{c} - {e}')
+    print(color_text('white', f'{c}'), f' - {e}')
     print(linha())
-    opc = teste_int('Enter a number: ')
+    print(color_text('yellow', 'Enter a number: '), end='')
+    opc = teste_int('')
     if opc > c:
-        print('You have crossed the limit of options!')
+        print(color_text('red', 'You have crossed the limit of options!'))
     elif opc == 0:
-        print('There is no option 0!')
+        print(color_text('red', 'There is no option 0!'))
     return opc
