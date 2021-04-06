@@ -1,7 +1,9 @@
+from colorama import init
 from time import sleep
 from BD.teste_arquivo import *
 from gerador.gerador import *
 from interface.menu import *
+from interface.form_text import *
 
 
 def esc(valid):
@@ -13,7 +15,7 @@ def esc(valid):
         elif opcao == 'n':
             return False
         else:
-            print('Choose between the two options!')
+            print(color_text('yellow', 'Choose between the two options!'))
             pass
 
 
@@ -25,7 +27,7 @@ class Concatenar(Rand):
 
     def run(self):
         ms = []
-        print('generating ...')
+        print(color_text('white', 'generating ...'))
         sleep(2)
         for c in range(self.total):
             retorno = self.rand()
@@ -40,6 +42,7 @@ OUT_TXT = 'characters.txt'
 OUT_NUM = 'numbers.txt'
 OUT_WIFI = 'WiFi.txt'
 OUT_ROT = 'Router.txt'
+init()
 
 while True:
     cabeçalho('Generator')
@@ -88,10 +91,10 @@ while True:
             Concatenar(OUT_ROT, tentativas, None, False, False, True, False, 10).run()
 
         elif opc2 == 4:
-            print('exiting...')
+            print(color_text('white', 'exiting...'))
             sleep(1)
             break
     elif opc == 3:
-        print('exiting...')
+        print(color_text('white', 'exiting...'))
         sleep(1)
         break
