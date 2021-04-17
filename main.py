@@ -1,28 +1,28 @@
 from colorama import init
 from time import sleep
-from BD.teste_arquivo import *
-from gerador.gerador import *
+from db.files import *
+from generator.generator import *
 from interface.menu import *
 from interface.form_text import *
 
 
 def esc(valid):
     while True:
-        opcao = str(input(valid))
-        opcao = f'{opcao.strip().lower()}'
-        if opcao == 'y':
+        entry = str(input(valid))
+        entry = f'{entry.strip().lower()}'
+        if entry == 'y':
             return True
-        elif opcao == 'n':
+        elif entry == 'n':
             return False
         else:
             print(color_text('yellow', 'Choose between the two options!'))
             pass
 
 
-class Concatenar(Rand):
-    def __init__(self, caminho, limite, name=None, simb=False, num=False, cap=False, pos=False, limit=8):
+class Together(Rand):
+    def __init__(self, path, limite, name=None, simb=False, num=False, cap=False, pos=False, limit=8):
         super().__init__(name, simb, num, cap, pos, limit)
-        self.path = caminho
+        self.path = path
         self.total = limite
 
     def run(self):
@@ -45,50 +45,50 @@ OUT_ROT = 'Router.txt'
 init()
 
 while True:
-    cabeçalho('Generator')
-    opc = menu_principal(['Standard', 'Wifi'])
+    header('Generator')
+    opc = main_menu(['Standard', 'Wifi'])
     # A opção padrão pode ser usada para força bruta em contas que usam apps de geração de senha
     if opc == 1:
         opc = esc('Do you want to add symbols? [y/n]: ')
         opc2 = esc('Do you want to add capital letters? [y/n]: ')
-        criar_arqv(OUT_TXT)
-        tentativas = int(input('Before generating us, how many attempts do you want to save ?: '))
+        mkarq(OUT_TXT)
+        attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
         if opc and opc2:
-            Concatenar(OUT_TXT, tentativas, None, True, False, True).run()
+            Together(OUT_TXT, attempts, None, True, False, True).run()
 
         elif not opc and not opc2:
-            Concatenar(OUT_TXT, tentativas).run()
+            Together(OUT_TXT, attempts).run()
 
         elif not opc and opc2:
-            Concatenar(OUT_TXT, tentativas, None, False, False, True).run()
+            Together(OUT_TXT, attempts, None, False, False, True).run()
 
         elif opc and not opc2:
-            Concatenar(OUT_TXT, tentativas, name=None, simb=True).run()
+            Together(OUT_TXT, attempts, name=None, simb=True).run()
 
     elif opc == 2:
         # A opção wifi se aplica a senhas de segurança baixa,
         # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
-        opc2 = menu_principal(['Numbers', 'Keyword', 'Default password'])
+        opc2 = main_menu(['Numbers', 'Keyword', 'Default password'])
         if opc2 == 1:
-            criar_arqv(OUT_NUM)
-            tentativas = int(input('Before generating us, how many attempts do you want to save ?: '))
-            Concatenar(OUT_NUM, tentativas, None, False, True).run()
+            mkarq(OUT_NUM)
+            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+            Together(OUT_NUM, attempts, None, False, True).run()
 
         elif opc2 == 2:
-            escolha = esc('Do you want the word to be at the beginning? [y/n]: ')
+            selection = esc('Do you want the word to be at the beginning? [y/n]: ')
             nome = str(input('What is the word: '))
-            criar_arqv(OUT_WIFI)
-            tentativas = int(input('Before generating us, how many attempts do you want to save ?: '))
-            if escolha:
-                Concatenar(OUT_WIFI, tentativas, nome, False, False, False, True).run()
-            elif not escolha:
-                Concatenar(OUT_WIFI, tentativas, nome).run()
+            mkarq(OUT_WIFI)
+            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+            if selection:
+                Together(OUT_WIFI, attempts, nome, False, False, False, True).run()
+            elif not selection:
+                Together(OUT_WIFI, attempts, nome).run()
 
         elif opc2 == 3:
             # A diferença aqui que em vez de 8 caracteres serão 10.
-            criar_arqv(OUT_ROT)
-            tentativas = int(input('Before generating us, how many attempts do you want to save ?: '))
-            Concatenar(OUT_ROT, tentativas, None, False, False, True, False, 10).run()
+            mkarq(OUT_ROT)
+            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+            Together(OUT_ROT, attempts, None, False, False, True, False, 10).run()
 
         elif opc2 == 4:
             print(color_text('white', 'exiting...'))

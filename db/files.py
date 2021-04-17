@@ -2,7 +2,7 @@ from interface.menu import *
 from interface.form_text import *
 
 
-def arquivo_existe(nome):
+def file_exist(nome):
     """
 Tests if the file exists, just argue the file name.
     """
@@ -14,7 +14,7 @@ Tests if the file exists, just argue the file name.
         return True
 
 
-def criar_arqv(nome):
+def mkarq(nome):
     """
 Create a new file, just argue the file name.
     """
@@ -24,7 +24,7 @@ Create a new file, just argue the file name.
         print(color_text('red', 'Error creating the file'))
 
 
-def ler_arqv(nome):
+def lenarq(nome):
     """
 Print the txt file, just argue the file name.
     """
@@ -35,8 +35,8 @@ Print the txt file, just argue the file name.
     else:
         with open(nome, 'rt') as arqv:
             cabeçalho('SAVED DATA.')
-            for linha in arqv:
-                print(f'{linha}'.replace('\n', ''))
+            for line in arqv:
+                print(f'{line}'.replace('\n', ''))
 
 
 def add_w(arq, arg1='vazio'):
