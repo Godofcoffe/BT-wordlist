@@ -42,6 +42,7 @@ OUT_TXT = 'characters.txt'
 OUT_NUM = 'numbers.txt'
 OUT_WIFI = 'WiFi.txt'
 OUT_ROT = 'Router.txt'
+folder = 'well/'
 init()
 
 while True:
@@ -51,7 +52,7 @@ while True:
     if opc == 1:
         opc = esc('Do you want to add symbols? [y/n]: ')
         opc2 = esc('Do you want to add capital letters? [y/n]: ')
-        mkarq(OUT_TXT)
+        mkarq(folder+OUT_TXT)
         attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
         if opc and opc2:
             Together(OUT_TXT, attempts, None, True, False, True).run()
@@ -70,14 +71,14 @@ while True:
         # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
         opc2 = main_menu(['Numbers', 'Keyword', 'Default password'])
         if opc2 == 1:
-            mkarq(OUT_NUM)
+            mkarq(folder+OUT_NUM)
             attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
             Together(OUT_NUM, attempts, None, False, True).run()
 
         elif opc2 == 2:
             selection = esc('Do you want the word to be at the beginning? [y/n]: ')
             nome = str(input('What is the word: '))
-            mkarq(OUT_WIFI)
+            mkarq(folder+OUT_WIFI)
             attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
             if selection:
                 Together(OUT_WIFI, attempts, nome, False, False, False, True).run()
@@ -86,7 +87,7 @@ while True:
 
         elif opc2 == 3:
             # A diferença aqui que em vez de 8 caracteres serão 10.
-            mkarq(OUT_ROT)
+            mkarq(folder+OUT_ROT)
             attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
             Together(OUT_ROT, attempts, None, False, False, True, False, 10).run()
 

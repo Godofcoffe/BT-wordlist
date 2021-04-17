@@ -34,7 +34,7 @@ Print the txt file, just argue the file name.
         print(color_text('red', 'ERROR reading file'))
     else:
         with open(nome, 'rt') as arqv:
-            cabeçalho('SAVED DATA.')
+            main_menu('SAVED DATA.')
             for line in arqv:
                 print(f'{line}'.replace('\n', ''))
 
