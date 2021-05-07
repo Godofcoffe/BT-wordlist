@@ -1,6 +1,7 @@
 from colorama import init
 from time import sleep
 from db.files import *
+from os import path, mkdir
 from generator.generator import *
 from interface.menu import *
 from interface.form_text import *
@@ -8,8 +9,7 @@ from interface.form_text import *
 
 def esc(valid):
     while True:
-        entry = str(input(valid))
-        entry = f'{entry.strip().lower()}'
+        entry = str(input(valid)).strip().lower()[0]
         if entry == 'y':
             return True
         elif entry == 'n':
@@ -44,57 +44,88 @@ OUT_WIFI = 'WiFi.txt'
 OUT_ROT = 'Router.txt'
 folder = 'well/'
 init()
+if not path.exists(folder):
+    mkdir(folder)
 
 while True:
     header('Generator')
     opc = main_menu(['Standard', 'Wifi'])
     # A opção padrão pode ser usada para força bruta em contas que usam apps de geração de senha
+
+    # A opção wifi se aplica a senhas de segurança baixa,
+    # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
+    # ou quando voce sabe pelo menos um pedaço da senha
+
+
     if opc == 1:
-        opc = esc('Do you want to add symbols? [y/n]: ')
-        opc2 = esc('Do you want to add capital letters? [y/n]: ')
-        mkarq(folder+OUT_TXT)
-        attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-        if opc and opc2:
-            Together(OUT_TXT, attempts, None, True, False, True).run()
+        while True:
+            opc = esc('Do you want to add symbols? [y/n]: ')
+            opc2 = esc('Do you want to add capital letters? [y/n]: ')
+            opc3 = esc('Want it to contain numbers? [y/n]: ')
+            attempts = int(input('How many attempts/words: '))
+            print()
+            print(f'Procedures:\nsymbols: {opc}\ncapital letters: {opc2}\nnumbers: {opc3}\n{attempts} words')
+            if esc('Continue...? [y/n]: '):
+                mkarq(folder+OUT_TXT)
+                if opc and opc2 and opc3:
+                    Together(OUT_TXT, attempts, None, True, True, True).run()
 
-        elif not opc and not opc2:
-            Together(OUT_TXT, attempts).run()
+                elif not opc and not opc2 and not opc3:
+                    Together(OUT_TXT, attempts).run()
 
-        elif not opc and opc2:
-            Together(OUT_TXT, attempts, None, False, False, True).run()
+                elif not opc and opc2 and not opc3:
+                    Together(OUT_TXT, attempts, None, False, False, True).run()
 
-        elif opc and not opc2:
-            Together(OUT_TXT, attempts, name=None, simb=True).run()
+                elif opc and not opc2 and not opc3:
+                    Together(OUT_TXT, attempts, None, True).run()
+                
+                elif not opc and not opc2 and opc3:
+                    Together(OUT_TXT, attempts, None, False, True).run()
+                break
+            else:
+                break
 
+    
     elif opc == 2:
-        # A opção wifi se aplica a senhas de segurança baixa,
-        # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
-        opc2 = main_menu(['Numbers', 'Keyword', 'Default password'])
-        if opc2 == 1:
-            mkarq(folder+OUT_NUM)
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-            Together(OUT_NUM, attempts, None, False, True).run()
+        while True:
+            opc2 = main_menu(['Numbers', 'Keyword', 'Default password'])
+            if opc2 == 1:
+                mkarq(folder+OUT_NUM)
+                attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+                Together(OUT_NUM, attempts, None, False, True).run()
 
-        elif opc2 == 2:
-            selection = esc('Do you want the word to be at the beginning? [y/n]: ')
-            nome = str(input('What is the word: '))
-            mkarq(folder+OUT_WIFI)
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-            if selection:
-                Together(OUT_WIFI, attempts, nome, False, False, False, True).run()
-            elif not selection:
-                Together(OUT_WIFI, attempts, nome).run()
+            elif opc2 == 2:
+                selection = esc('Do you want the word to be at the beginning? [y/n]: ')
+                name = str(input('What is the word: '))
+                attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+                print('Spaces will be filled with random characters')
+                sleep(3)
+                opc = esc('Do you want to have numbers? [y/n]: ')
+                print()
+                print(f'Procedures:\nWord at the beginning: {selection}\nWord: {name}\nnumbers: {opc}\n{attempts} words')
+                if esc('Continue...? [y/n]: '):
+                    mkarq(folder+OUT_WIFI)
+                    if selection and opc:
+                        Together(OUT_WIFI, attempts, name, False, True, False, True).run()
+                    elif selection and not opc:
+                        Together(OUT_WIFI, attempts, name, False, False, False, True).run()
+                    elif not selection and opc:
+                        Together(OUT_WIFI, attempts, name, False, True).run()
+                    break
+                else:
+                    break
 
-        elif opc2 == 3:
-            # A diferença aqui que em vez de 8 caracteres serão 10.
-            mkarq(folder+OUT_ROT)
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-            Together(OUT_ROT, attempts, None, False, False, True, False, 10).run()
+            elif opc2 == 3:
+                # A diferença aqui que em vez de 8 caracteres serão 10.
+                # aqui será usado normalmente para roteadores com senhas SSIDs de fabrica
+                mkarq(folder+OUT_ROT)
+                attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
+                Together(OUT_ROT, attempts, None, False, False, True, False, 10).run()
 
-        elif opc2 == 4:
-            print(color_text('white', 'exiting...'))
-            sleep(1)
-            break
+            elif opc2 == 4:
+                print(color_text('white', 'exiting...'))
+                sleep(1)
+                break
     elif opc == 3:
         print(color_text('white', 'exiting...'))
         sleep(1)

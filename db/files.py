@@ -20,8 +20,8 @@ Create a new file, just argue the file name.
     """
     try:
         open(nome, 'wt+')
-    except:
-        print(color_text('red', 'Error creating the file'))
+    except Exception as error:
+        print(color_text('red', f'Error creating the file {error}'))
 
 
 def lenarq(nome):
