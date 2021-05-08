@@ -43,9 +43,9 @@ There is no need for the exit option, the code does it automatically.
     c = 1
     e = 'Exit the program.'
     for item in opc:
-        print(color_text('white', f'[ {c} ]'), f'- {item}')
+        print(f'[ {color_text("green", c)} ] - {item}')
         c += 1
-    print(color_text('white', f'[ {c} ]'), f'- {e}')
+    print(f'[ {color_text("green", c)} ] - {e}')
     print(line())
     print(color_text('yellow', 'Enter a number: '), end='')
     opc = test_int('')

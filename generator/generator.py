@@ -22,57 +22,53 @@ class Rand:
       pos = Changes the position of the name parameter.
     """
 
-        # geração de números
         attempts = []
-        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-                   'u', 'v', 'x', 'y', 'z']
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z']
+        # geração de números
         if self.num:
             for c in range(0, 8):
                 a = randint(0, 9)
                 attempts.append(str(a))
-        elif not self.num:
-            for c in range(0, 8):
-                a = randint(0, 9)
-                attempts.append(str(a))
 
-            # geração da palavra-chave
-            if self.name is not None:
-                lenght = len(self.name)
-                attempts2 = []
+        # geração da palavra-chave
+        if self.name is not None:
+            lenght = len(self.name)
+            attempts2 = []
+            if self.num:
                 for c in range(0, 8 - lenght + 1):
                     a = randint(0, 9)
                     attempts2.append(str(a))
-                if self.pos:
-                    attempts2.insert(0, self.name)
-                    result = ''.join(attempts2)
-                    return result
-                elif not self.pos:
-                    attempts2.append(self.name)
-                    result = ''.join(attempts2)
-                    return result
+            if not self.num:
+                for c in range(0, 8 - lenght + 1):
+                    a = choice(letters)
+                    attempts2.append(str(a))
+            if self.pos:
+                attempts2.insert(0, self.name)
+                result = ''.join(attempts2)
+                return result
+            elif not self.pos:
+                attempts2.append(self.name)
+                result = ''.join(attempts2)
+                return result
 
-            # parte da geração aleatória
-            if self.name is None:
-                letters2 = letters[:]
-                if self.cap:
-                    for l in letters:
-                        letters2.append(l.upper())
-                if not self.cap:
-                    pass
-                if self.simb:
-                    letters2.append('#')
-                    letters2.append('@')
-                    letters2.append('+')
-                    letters2.append('%')
-                    letters2.append('$')
-                    letters2.append('!')
-                    letters2.append('?')
-                    letters2.append('&')
-                    letters2.append('*')
-                if not self.simb:
-                    pass
-                for l in letters2:
-                    attempts.append(l)
+        # parte da geração aleatória
+        if self.name is None:
+            letters2 = letters[:]
+            if self.cap:
+                for l in letters:
+                    letters2.append(l.upper())
+            if self.simb:
+                letters2.append('#')
+                letters2.append('@')
+                letters2.append('+')
+                letters2.append('%')
+                letters2.append('$')
+                letters2.append('!')
+                letters2.append('?')
+                letters2.append('&')
+                letters2.append('*')
+            for l in letters2:
+                attempts.append(l)
 
         # escolha dos 8 dígitos ou mais
         temp = []
