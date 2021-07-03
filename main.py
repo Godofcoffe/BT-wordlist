@@ -3,6 +3,8 @@ from time import sleep
 from colorama import init
 from src.generator import main
 from src.interface.menu import *
+from requests import get
+from re import findall
 
 __version__ = "1.0.1"
 
@@ -17,6 +19,21 @@ def choose(valid):
         else:
             print(color_text('yellow', 'Choose between the two options!'))
             pass
+
+
+def update():
+    try:
+        r = get("https://raw.githubusercontent.com/Godofcoffe/CWL/main/main.py")
+
+        remote_version = str(findall('__version__ = "(.*)"', r.text)[0])
+        local_version = __version__
+
+        if remote_version != local_version:
+            print(color_text('yellow', "Update Available!\n" +
+                             f"You are running version {local_version}. Version {remote_version} "
+                             f"is available at https://github.com/Godofcoffe/Butterfly"))
+    except Exception as error:
+        print(color_text('red', f"A problem occured while checking for an update: {error}"))
 
 
 # saida de arquivos .txt
@@ -39,6 +56,7 @@ _________  __      __.____
         \/       \/          \/
 """))
     opc = main_menu(['Standard', 'Wifi'])
+    update()
     # A opção padrão pode ser usada para força bruta em contas que usam apps de geração de senha
 
     # A opção wifi se aplica a senhas de segurança baixa,
