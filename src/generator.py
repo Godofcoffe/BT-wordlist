@@ -2,7 +2,7 @@ from random import randint, choice
 from src.interface.menu import color_text
 from time import sleep
 
-res_combine = 0
+res_combine = 1
 
 
 def factorial(num: int):
@@ -83,23 +83,37 @@ Generates a random password of 8 or more characters between letters and numbers.
 def main(archive: str, **kwargs):
     word = kwargs.get("word")
     simb = kwargs.get("symbols")
-    only_num = kwargs.get("only_num")
-    num = kwargs.get("numbers")
-    cap = kwargs.get("uppers")
-    pos = kwargs.get("position")
-    limit = kwargs.get("limit")
+    if simb is None:
+        simb = False
 
-    print(kwargs)
+    only_num = kwargs.get("only_num")
+    if only_num is None:
+        only_num = False
+
+    num = kwargs.get("numbers")
+    if num is None:
+        num = False
+
+    cap = kwargs.get("uppers")
+    if cap is None:
+        cap = False
+
+    pos = kwargs.get("position")
+    if pos is None:
+        pos = False
+
+    limit = kwargs.get("limit")
+    if limit is None:
+        limit = 8
+
     possibilities = {}
     print(f"Were calculated {res_combine} possibilities")
     print(color_text('white', 'generating ...'))
     sleep(3)
     with open(archive, "w+") as out:
-        print('teste')
-        print(res_combine)
         for c in range(50):
             retorn = rand(word, simb, only_num, num, cap, pos, limit)
-            print(retorn)
+            possibilities[retorn] = 0
             if possibilities[retorn] > 1:
                 print(color_text("red", retorn))
             else:
