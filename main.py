@@ -88,9 +88,9 @@ _________  __      __.____
                     main(folder + OUT_TXT, symbols=True)
 
                 elif not symbols and not cap_letters and numbers:
-                    main(folder + OUT_TXT, numbers=True).run()
+                    main(folder + OUT_TXT, numbers=True)
                 elif symbols and cap_letters and not numbers:
-                    main(folder + OUT_TXT, symbols=True, uppers=True).run()
+                    main(folder + OUT_TXT, symbols=True, uppers=True)
                 break
             else:
                 break
@@ -116,7 +116,7 @@ _________  __      __.____
                 if selection and spaces_num:
                     main(folder + OUT_WIFI, word=name, position=selection, numbers=spaces_num)
                 elif selection and not spaces_num:
-                    main(folder + OUT_WIFI, word=name, position=selection).run()
+                    main(folder + OUT_WIFI, word=name, position=selection)
                 elif not selection and spaces_num:
                     main(folder + OUT_WIFI, word=name, numbers=spaces_num)
 
