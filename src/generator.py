@@ -2,8 +2,6 @@ from random import randint, choice
 from src.interface.menu import color_text
 from time import sleep
 
-res_combine = 1
-
 
 def factorial(num: int):
     tot = 1
@@ -33,12 +31,10 @@ Generates a random password of 8 or more characters between letters and numbers.
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
         'u', 'v', 'x', 'y', 'z'
     )
-    global res_combine
     # geração de números
     if only_numbers:
         for c in range(0, limit):
             result += str(randint(0, 9))
-        res_combine = factorial(limit)
     else:
         # geração da palavra-chave
         if word is not None:
@@ -49,7 +45,6 @@ Generates a random password of 8 or more characters between letters and numbers.
             elif not numbers:
                 for c in range(0, limit - lenght + 1):
                     result += choice(letters)
-            res_combine = factorial(len(result))
             if position:
                 result = word + result
             elif not position:
@@ -76,12 +71,12 @@ Generates a random password of 8 or more characters between letters and numbers.
                     letters2.append(c)
             for c in range(limit):
                 result += str(choice(letters2))
-            res_combine = factorial(limit)
     return result
 
 
 def main(archive: str, **kwargs):
     word = kwargs.get("word")
+
     simb = kwargs.get("symbols")
     if simb is None:
         simb = False
@@ -106,12 +101,20 @@ def main(archive: str, **kwargs):
     if limit is None:
         limit = 8
 
+    res_combine = factorial(limit)
+    if word is not None:
+        rest = ''
+        lenght = len(word)
+        for c in range(0, limit - lenght + 1):
+            rest += str(randint(0, 9))
+        res_combine = factorial(len(rest))
+
     possibilities = {}
     print(f"Were calculated {res_combine} possibilities")
     print(color_text('white', 'generating ...'))
     sleep(3)
     with open(archive, "w+") as out:
-        for c in range(50):
+        for c in range(res_combine):
             retorn = rand(word, simb, only_num, num, cap, pos, limit)
             possibilities[retorn] = 0
             if possibilities[retorn] > 1:
