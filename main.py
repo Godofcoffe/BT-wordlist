@@ -1,13 +1,13 @@
-from colorama import init
-from time import sleep
-from db.files import *
 from os import path, mkdir
-from generator.generator import *
-from interface.menu import *
-from interface.form_text import *
+from time import sleep
+from colorama import init
+from src.generator import main
+from src.interface.menu import *
+
+__version__ = "1.0.1"
 
 
-def esc(valid):
+def choose(valid):
     while True:
         entry = str(input(valid)).strip().lower()[0]
         if entry == 'y':
@@ -17,24 +17,6 @@ def esc(valid):
         else:
             print(color_text('yellow', 'Choose between the two options!'))
             pass
-
-
-class Together(Rand):
-    def __init__(self, path, limite, name=None, simb=False, num=False, cap=False, pos=False, limit=8):
-        super().__init__(name, simb, num, cap, pos, limit)
-        self.path = path
-        self.total = limite
-
-    def run(self):
-        ms = []
-        print(color_text('white', 'generating ...'))
-        sleep(2)
-        for c in range(self.total):
-            retorno = self.rand()
-            if retorno not in ms:
-                print(color_text('green', retorno))
-                ms.append(retorno)
-                add_w(self.path, retorno)
 
 
 # saida de arquivos .txt
@@ -48,7 +30,14 @@ if not path.exists(folder):
     mkdir(folder)
 
 while True:
-    header('Generator')
+    print(color_text("red", r"""
+_________  __      __.____     
+\_   ___ \/  \    /  \    |    
+/    \  \/\   \/\/   /    |    
+\     \____\        /|    |___ 
+ \______  / \__/\  / |_______ \
+        \/       \/          \/
+"""))
     opc = main_menu(['Standard', 'Wifi'])
     # A opção padrão pode ser usada para força bruta em contas que usam apps de geração de senha
 
@@ -56,83 +45,67 @@ while True:
     # como números de telefone ou nomes de pessoas com datas ou números aleátorios.
     # ou quando voce sabe pelo menos um pedaço da senha
 
-
     if opc == 1:
         while True:
-            opc = esc('Do you want to add symbols? [y/n]: ')
-            opc2 = esc('Do you want to add capital letters? [y/n]: ')
-            opc3 = esc('Want it to contain numbers? [y/n]: ')
-            attempts = int(input('How many attempts/words: '))
+            symbols = choose(color_text("white", 'Do you want to add symbols? [y/n]: '))
+            cap_letters = choose(color_text("white", 'Do you want to add capital letters? [y/n]: '))
+            numbers = choose(color_text("white", 'Want it to contain numbers? [y/n]: '))
             print()
-            print(f'Procedures:\nsymbols: {opc}\ncapital letters: {opc2}\nnumbers: {opc3}\n{attempts} words')
-            if esc('Continue...? [y/n]: '):
-                mkarq(folder+OUT_TXT)
-                if opc and opc2 and opc3:
-                    Together(folder+OUT_TXT, attempts, None, True, True, True).run()
+            print(color_text("yellow", "Procedures:"))
+            print(f"{color_text('green', 'symbols')}: {symbols}")
+            print(f"{color_text('green', 'capital letters')}: {cap_letters}")
+            print(f"{color_text('green', 'numbers')}: {numbers}")
+            print()
+            if choose('Continue...? [y/n]: '):
+                if symbols and cap_letters and numbers:
+                    main(folder + OUT_TXT, uppers=True, numbers=True, symbols=True)
 
-                elif not opc and not opc2 and not opc3:
-                    Together(folder+OUT_TXT, attempts).run()
+                elif not symbols and not cap_letters and not numbers:
+                    main(folder + OUT_TXT)
 
-                elif not opc and opc2 and not opc3:
-                    Together(folder+OUT_TXT, attempts, None, False, False, True).run()
+                elif not symbols and cap_letters and not numbers:
+                    main(folder + OUT_TXT, uppers=True)
 
-                elif opc and not opc2 and not opc3:
-                    Together(folder+OUT_TXT, attempts, None, True).run()
-                
-                elif not opc and not opc2 and opc3:
-                    Together(folder+OUT_TXT, attempts, None, False, True).run()
-                elif opc and opc2 and not opc3:
-                    Together(folder+OUT_TXT, attempts, None, True).run()
+                elif symbols and not cap_letters and not numbers:
+                    main(folder + OUT_TXT, symbols=True)
+
+                elif not symbols and not cap_letters and numbers:
+                    main(folder + OUT_TXT, numbers=True).run()
+                elif symbols and cap_letters and not numbers:
+                    main(folder + OUT_TXT, symbols=True, uppers=True).run()
                 break
             else:
                 break
 
-    
     elif opc == 2:
         opc2 = main_menu(['Numbers', 'Keyword', 'Default password'])
         if opc2 == 1:
-            mkarq(folder+OUT_NUM)
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-            temp = []
-            list_8char = []
-            for c in range(attempts):
-                for d in range(8):
-                    var = randint(0, 9)
-                    list_8char.append(str(var))
-                result = ''.join(list_8char)
-                list_8char.clear()
-                if not result in temp:
-                    print(color_text('green', result))
-                    temp.append(result)
-            for e in temp:
-                add_w(folder+OUT_NUM, e)
-        
-        
+            main(folder + OUT_NUM, only_num=True)
+
         elif opc2 == 2:
-            selection = esc('Do you want the word to be at the beginning? [y/n]: ')
+            selection = choose('Do you want the word to be at the beginning? [y/n]: ')
             name = str(input('What is the word: '))
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
             print('Spaces will be filled with random characters...')
             sleep(3)
-            opc = esc('Do you want spaces to be numbers? [y/n]: ')
+            spaces_num = choose('Do you want spaces to be numbers? [y/n]: ')
             print()
-            print(f'Procedures:\nWord at the beginning: {selection}\nWord: {name}\nnumbers: {opc}\n{attempts} words')
-            if esc('Continue...? [y/n]: '):
-                mkarq(folder+OUT_WIFI)
-                if selection and opc:
-                    Together(folder+OUT_WIFI, attempts, name, False, True, False, True).run()
-                elif selection and not opc:
-                    Together(folder+OUT_WIFI, attempts, name, False, False, False, True).run()
-                elif not selection and opc:
-                    Together(folder+OUT_WIFI, attempts, name, False, True).run()
-
+            print(color_text("yellow", "Procedures:"))
+            print(f"{color_text('green', 'Word at the beginning')}: {selection}")
+            print(f"{color_text('green', 'Word')}: {name}")
+            print(f"{color_text('green', 'numbers')}: {spaces_num}")
+            print()
+            if choose('Continue...? [y/n]: '):
+                if selection and spaces_num:
+                    main(folder + OUT_WIFI, word=name, position=selection, numbers=spaces_num)
+                elif selection and not spaces_num:
+                    main(folder + OUT_WIFI, word=name, position=selection).run()
+                elif not selection and spaces_num:
+                    main(folder + OUT_WIFI, word=name, numbers=spaces_num)
 
         elif opc2 == 3:
             # A diferença aqui que em vez de 8 caracteres serão 10.
             # aqui será usado normalmente para roteadores com senhas SSIDs de fabrica
-            mkarq(folder+OUT_ROT)
-            attempts = int(input('Before generating us, how many attempts do you want to save ?: '))
-            Together(folder+OUT_ROT, attempts, None, False, False, True, False, 10).run()
+            main(folder + OUT_ROT, limit=10)
 
         elif opc2 == 4:
             print(color_text('white', 'exiting...'))
